@@ -6,5 +6,5 @@ def uppercase(str):
         else:
             ascii = ord(str[i])
 
-        print("{ascii:c}".format(ascii = ascii), end="")
+        print("{ascii:c}".format(ascii=ascii), end="")
     print()
