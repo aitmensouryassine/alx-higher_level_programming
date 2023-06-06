@@ -1,3 +1,4 @@
 #!/usr/bin/python3
+txt = "{number:c}"
 for c in range(97, (97 + 26)):
-    print(f"{c:c}", end="")
+    print(txt.format(number = c), end="")
