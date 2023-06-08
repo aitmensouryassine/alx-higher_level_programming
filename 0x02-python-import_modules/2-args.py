@@ -4,10 +4,8 @@ if __name__ == "__main__":
 
     argvlen = len(sys.argv)
 
-    if argvlen == 1:
-        print("0 arguments.")
-    else:
-        plural = "" if argvlen <= 2 else "s"
-        print("{} argument{}:".format(argvlen - 1, plural))
-        for i in range(1, argvlen):
-            print("{}: {}".format(i, sys.argv[i]))
+    plural = "" if argvlen == 2 else "s"
+    sep = "." if argvlen == 1 else ":"
+    print("{} argument{}{}".format(argvlen - 1, plural, sep))
+    for i in range(1, argvlen):
+        print("{}: {}".format(i, sys.argv[i]))
