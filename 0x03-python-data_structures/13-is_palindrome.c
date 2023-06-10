@@ -1,22 +1,27 @@
 #include "lists.h"
 
 /**
- * list_len - returns the length of a list
+ * dup_rev_list - duplicate and reverse a singly list
  * @head: the head of the list
- * Return: length of the list
+ * Return: the head of the new list
  */
-int list_len(listint_t **head)
+listint_t *dup_rev_list(listint_t **head)
 {
 	listint_t *tmp = *head;
-	int i = 0;
+	listint_t *newhead = NULL, *new;
 
 	while (tmp)
 	{
+		new = malloc(sizeof(listint_t));
+
+		new->n = tmp->n;
+		new->next = newhead;
+		newhead = new;
+
 		tmp = tmp->next;
-		i++;
 	}
 
-	return (i);
+	return (newhead);
 }
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -25,37 +30,21 @@ int list_len(listint_t **head)
  */
 int is_palindrome(listint_t **head)
 {
-	int len = list_len(head);
-	int *arr, i;
-	listint_t *tmp = *head;
-	int palindrome = 1;
+	listint_t *dup = dup_rev_list(head);
+	listint_t *tmp = *head, *tmp1 = dup;
 
-	if (len == 0)
-		return (1);
-
-	arr = malloc(sizeof(int) * len);
-	if (!arr)
+	if (!tmp || tmp->next == NULL)
 		return (0);
 
-	i = 0;
 	while (tmp)
 	{
-		arr[i] = tmp->n;
+		if (tmp->n != tmp1->n)
+			return (0);
+
 		tmp = tmp->next;
-		i++;
+		tmp1 = tmp1->next;
 	}
+	free_listint(dup);
 
-	i = 0;
-	while (i < len)
-	{
-		if (arr[i] != arr[(len - 1) - i])
-		{
-			palindrome = 0;
-			break;
-		}
-		i++;
-	}
-
-	free(arr);
-	return (palindrome);
+	return (1);
 }
