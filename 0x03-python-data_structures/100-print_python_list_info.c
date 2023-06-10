@@ -23,16 +23,23 @@ void print_python_list_info(PyObject *p)
 		{
 			printf("float\n");
 		}
-		if (PyTuple_Check(item))
+		else if (PyTuple_Check(item))
 		{
 			printf("tuple\n");
 		}
-		if (PyInt_CheckExact(item))
+		else if (PyList_Check(item))
+		{
+			printf("list\n");
+		}
+		else if (PyUnicode_Check(item))
+		{
+			printf("str\n");
+		}
+		else
 		{
 			printf("int\n");
 		}
 
 		i++;
 	}
-	printf("\n\n");
 }
