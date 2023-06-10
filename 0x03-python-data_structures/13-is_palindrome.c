@@ -1,27 +1,22 @@
 #include "lists.h"
 
 /**
- * dup_rev_list - duplicate and reverse a singly list
+ * rev_list - reverse a singly list
  * @head: the head of the list
- * Return: the head of the new list
  */
-listint_t *dup_rev_list(listint_t **head)
+void rev_list(listint_t **head)
 {
-	listint_t *tmp = *head;
-	listint_t *newhead = NULL, *new;
+	listint_t *prev = NULL, *next = NULL, *curr = *head;
 
-	while (tmp)
+	while (curr)
 	{
-		new = malloc(sizeof(listint_t));
+		next = curr->next;
+		curr->next = prev;
 
-		new->n = tmp->n;
-		new->next = newhead;
-		newhead = new;
-
-		tmp = tmp->next;
+		prev = curr;
+		curr = next;
 	}
-
-	return (newhead);
+	*head = prev;
 }
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -30,21 +25,34 @@ listint_t *dup_rev_list(listint_t **head)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *dup = dup_rev_list(head);
-	listint_t *tmp = *head, *tmp1 = dup;
+	listint_t *q = *head, *p = *head, *middle, *tmp = *head;
 
-	if (!tmp || tmp->next == NULL)
+	if (!(*head) || !(*head)->next)
 		return (0);
 
-	while (tmp)
+	while (1)
 	{
-		if (tmp->n != tmp1->n)
+		p = p->next->next;
+
+		if (!p->next || !p->next->next)
+		{
+			middle = q->next->next;
+			break;
+		}
+
+		q = q->next;
+	}
+
+	rev_list(&middle);
+
+	while (middle)
+	{
+		if (tmp->n != middle->n)
 			return (0);
 
+		middle = middle->next;
 		tmp = tmp->next;
-		tmp1 = tmp1->next;
 	}
-	free_listint(dup);
 
 	return (1);
 }
