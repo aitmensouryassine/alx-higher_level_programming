@@ -2,13 +2,15 @@
 #include <object.h>
 #include <listobject.h>
 
+void print_python_bytes(PyObject *p);
+
 /**
  * print_python_list - prints basic infos about python lists
  * @p: python object
  */
 void print_python_list(PyObject *p)
 {
-	PyListObject *list = malloc(sizeof(PyObject *));
+	PyListObject *list;
 	Py_ssize_t size = PyList_Size(p), i = 0;
 
 	list = (PyListObject *)p;
@@ -19,27 +21,9 @@ void print_python_list(PyObject *p)
 
 	while (i < size)
 	{
-		printf("Element %d: ", (int)i);
-		if (PyFloat_Check(list->ob_item[i]))
-		{
-			printf("float\n");
-		}
-		else if (PyTuple_Check(list->ob_item[i]))
-		{
-			printf("tuple\n");
-		}
-		else if (PyList_Check(list->ob_item[i]))
-		{
-			printf("list\n");
-		}
-		else if (PyUnicode_Check(list->ob_item[i]))
-		{
-			printf("str\n");
-		}
-		else
-		{
-			printf("int\n");
-		}
+		printf("Element %d: %s\n", (int)i, ((list->ob_item[i])->ob_type)->tp_name);
+		if (PyBytes_Check(list->ob_item[i]))
+			print_python_bytes(list->ob_item[i]);
 		i++;
 	}
 }
@@ -53,6 +37,12 @@ void print_python_bytes(PyObject *p)
 	Py_ssize_t size = PyBytes_Size(p), size_to_print, i = 0;
 
 	printf("[.] bytes object info\n");
+	if (!PyBytes_Check(p))
+	{
+		printf("  [ERROR] Invalid Bytes Object\n");
+		return;
+	}
+
 	printf("  size: %d\n", (int)size);
 	printf("  trying string: %s\n", PyBytes_AS_STRING(p));
 
