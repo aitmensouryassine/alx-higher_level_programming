@@ -55,6 +55,7 @@ class Square:
             self.__position = value
 
     def my_print(self):
+        """ Print square using # symbol """
         if self.area() == 0:
             print()
         else:
