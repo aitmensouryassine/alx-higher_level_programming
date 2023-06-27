@@ -38,8 +38,7 @@ class Square:
     def position(self, value):
         """ sets the position of the square """
         if len(value) != 2 or not isinstance(value, tuple) \
-           or not all(isinstance(cor, int) for cor in value) \
-           or not all(cor >= 0 for cor in value):
+           or not all((isinstance(cor, int) and cor >= 0) for cor in value):
             raise TypeError("position must be a tuple of 2 positive integers")
         else:
             self.__position = value
