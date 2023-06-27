@@ -61,9 +61,8 @@ class Square:
             for line in range(0, y):
                 print()
             for i in range(0, self.size):
-                if y >= 0:
-                    for k in range(0, x):
-                        print(" ", end="")
+                for k in range(0, x):
+                    print(" ", end="")
                 for j in range(0, self.size):
                     print("#", end="")
                 print()
