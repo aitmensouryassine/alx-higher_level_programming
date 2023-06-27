@@ -6,6 +6,7 @@ class Square:
     """ Creates a square """
 
     def __init__(self, size=0, position=(0, 0)):
+        """ Init square attributes """
         if len(position) > 2 or not isinstance(position, tuple) \
            or not all(isinstance(cor, int) for cor in position) \
            or not all(cor >= 0 for cor in position):
