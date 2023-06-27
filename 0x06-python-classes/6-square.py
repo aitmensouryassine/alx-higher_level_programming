@@ -7,7 +7,7 @@ class Square:
 
     def __init__(self, size=0, position=(0, 0)):
         if len(position) > 2 or not isinstance(position, tuple) \
-           or not all(cor >= 0 and isinstance(cor, int) for cor in positon):
+           or not all(cor >= 0 and isinstance(cor, int) for cor in position):
             raise TypeError("position must be a tuple of 2 positive integers")
         else:
             self.__position = position
