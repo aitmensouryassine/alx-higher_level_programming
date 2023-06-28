@@ -50,7 +50,7 @@ class SinglyLinkedList:
         prev = None
 
         while curr.next_node is not None:
-            if value <= curr.data:
+            if value < curr.data:
                 if prev is None:
                     new.next_node = self.__head
                     self.__head = new
@@ -62,8 +62,12 @@ class SinglyLinkedList:
             curr = curr.next_node
 
         if value <= curr.data:
-            prev.next_node = new
-            new.next_node = curr
+            if prev is None:
+                new.next_node = self.__head
+                self.__head = new
+            else:
+                prev.next_node = new
+                new.next_node = curr
         else:
             curr.next_node = new
 
