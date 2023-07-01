@@ -1,0 +1,39 @@
+===================================
+ How to usr matrix_divided function
+===================================
+
+``matrix_divided`` divides all elements of a matrix by a non zero number
+Return: A new matrix where the division of all elements by `div` is rounded
+to 2 decimal places
+
+Matrix of Numbers (integers and/or floats)
+==========================================
+
+>>> matrix_divided = __import__("2-matrix_divided").matrix_divided
+>>> matrix_divided([[1.0, 2, 3], [4, 5.4, 6.0]], 2)
+[[0.5, 1.0, 1.5], [2.0, 2.7, 3.0]]
+
+Matric of Non_numbers
+=====================
+``matrix_divided`` With matrix of floats and integers
+>>> matrix_divided([[1, "Yassine", 3], [4.0, None, 6.0]], 2)
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Rows with different sizes
+=========================
+>>> matrix_divided([[1, 2, 3], [4.0, 3]], 2)
+Traceback (most recent call last):
+TypeError: Each row of the matrix must have the same size
+
+Divider must be a number
+========================
+>>> matrix_divided([[1, 2, 3], [4.0, 3, 6]], "Yassine")
+Traceback (most recent call last):
+TypeError: div must be a number
+
+Divider must be a non zero number
+=================================
+>>> matrix_divided([[1, 2, 3], [4.0, 3, 6]], 0)
+Traceback (most recent call last):
+ZeroDivisionError: division by zero
