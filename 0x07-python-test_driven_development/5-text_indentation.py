@@ -32,7 +32,7 @@ def text_indentation(text):
                 line.append(c)
                 new_line = False
 
-    if not line in lines:
+    if line not in lines:
         lines.append(line)
 
     for line in lines:
