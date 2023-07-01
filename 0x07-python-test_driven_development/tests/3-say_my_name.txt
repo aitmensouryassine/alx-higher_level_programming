@@ -1,0 +1,26 @@
+================================
+ How to use say_my_name function
+================================
+
+``say_my_name`` prints name to stdout
+
+STRINGS
+=======
+
+>>> say_my_name = __import__("3-say_my_name").say_my_name
+>>> say_my_name("Yassine", "Ait Mensour")
+My name is Yassine Ait Mensour
+
+>>> say_my_name("Yassine") #doctest: +REPORT_NDIFF
+My name is Yassine 
+
+NON_STRINGS
+===========
+
+>>> say_my_name(None)
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+>>> say_my_name("Yassine", None)
+Traceback (most recent call last):
+TypeError: last_name must be a string
