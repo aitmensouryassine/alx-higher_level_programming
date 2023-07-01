@@ -1,0 +1,69 @@
+====================================
+ How to usr text_identation function
+====================================
+
+``text_identation`` prints a text with 2 new lines after each of
+these characters: ., ? and :
+
+TEXT
+====
+
+>>> text_indentation = __import__("5-text_indentation").text_indentation
+>>> text_indentation("Lorem ipsum dolor sit amet? consectetur adipiscing elit. Phasellus convallis nibh at erat porttitor, non venenatis eros ultrices. Vivamus justo.") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet?
+<BLANKLINE>
+consectetur adipiscing elit.
+<BLANKLINE>
+Phasellus convallis nibh at erat porttitor, non venenatis eros ultrices.
+<BLANKLINE>
+Vivamus justo.
+<BLANKLINE>
+
+``text`` with no `? . :` charcters
+>>> text_indentation("Lorem ipsum dolor sit amet consectetur adipiscing elit Phasellus convallis nibh at erat porttitor non venenatis eros ultrices Vivamus justo") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet consectetur adipiscing elit Phasellus convallis nibh at erat porttitor non venenatis eros ultrices Vivamus justo
+
+``text`` with double `? . :` characters
+>>> text_indentation("Lorem ipsum dolor sit amet?? consectetur adipiscing elit.. Phasellus convallis nibh at erat:: porttitor non venenatis eros ultrices Vivamus justo") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet?
+<BLANKLINE>
+?
+<BLANKLINE>
+consectetur adipiscing elit.
+<BLANKLINE>
+.
+<BLANKLINE>
+Phasellus convallis nibh at erat:
+<BLANKLINE>
+:
+<BLANKLINE>
+porttitor non venenatis eros ultrices Vivamus justo
+
+``text`` with no space after `? . :` characters
+>>> text_indentation("Lorem ipsum dolor sit amet?consectetur adipiscing elit.Phasellus convallis:nibh at erat") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet?
+<BLANKLINE>
+consectetur adipiscing elit.
+<BLANKLINE>
+Phasellus convallis:
+<BLANKLINE>
+nibh at erat
+
+``text`` where a line starts with spaces
+>>> text_indentation("       Lorem ipsum dolor sit amet") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet
+
+``text`` where a line ends with spaces
+>>> text_indentation("       Lorem ipsum dolor sit amet.        ") #doctest: +REPORT_NDIFF
+Lorem ipsum dolor sit amet.
+<BLANKLINE>
+
+NON_TEXT
+========
+>>> text_indentation(12)  #doctest: +REPORT_NDIFF
+Traceback (most recent call last):
+TypeError: text must be a string
+
+>>> text_indentation(None)  #doctest: +REPORT_NDIFF
+Traceback (most recent call last):
+TypeError: text must be a string
