@@ -1,15 +1,32 @@
+================================
+ How to Use add_integer function
+================================
+
+NUMBERS
+=======
+
 >>> add_integer = __import__("0-add_integer").add_integer
+
+``add_integer`` returns the addition of two integers
 >>> add_integer(1, 2)
 3
 
+``add_integer`` also works with negative numbers
 >>> add_integer(100, -2)
 98
 
+``add_integer`` the second argument (b=98) is optional
 >>> add_integer(2)
 100
 
+``add_integer`` cast float numbers into integers and do the addition
 >>> add_integer(100.3, -2)
 98
+
+NON-NUMBERS
+===========
+
+``add_integer`` raise a TypeError when a string is passed as argument
 
 >>> add_integer(4, "School")
 Traceback (most recent call last):
@@ -18,6 +35,8 @@ TypeError: b must be an integer
 >>> add_integer("School", 4)
 Traceback (most recent call last):
 TypeError: a must be an integer
+
+``add_integer`` raise a TypeError when a None is passed as argument
 
 >>> add_integer(2, None)
 Traceback (most recent call last):
