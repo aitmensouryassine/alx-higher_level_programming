@@ -1,0 +1,94 @@
+================================
+ How to use matrix_mul function
+================================
+
+``matrix_mul`` multiplies two matrices (list of lists)
+
+ERRORS
+======
+
+>>> matrix_mul = __import__("100-matrix_mul").matrix_mul
+>>> matrix_mul()
+Traceback (most recent call last):
+TypeError: matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
+
+>>> matrix_mul([])
+Traceback (most recent call last):
+TypeError: matrix_mul() missing 1 required positional argument: 'm_b'
+
+>>> matrix_mul(1, 1)
+Traceback (most recent call last):
+TypeError: m_a must be a list
+
+>>> matrix_mul([1], 1)
+Traceback (most recent call last):
+TypeError: m_b must be a list
+
+>>> matrix_mul([], [])
+Traceback (most recent call last):
+ValueError: m_a can't be empty
+
+>>> matrix_mul([1], [])
+Traceback (most recent call last):
+TypeError: m_a must be a list of lists
+
+>>> matrix_mul([[1]], [])
+Traceback (most recent call last):
+ValueError: m_b can't be empty
+
+>>> matrix_mul([[1]], [5])
+Traceback (most recent call last):
+TypeError: m_b must be a list of lists
+
+>>> matrix_mul([["1"]], [[5]])
+Traceback (most recent call last):
+TypeError: m_a should contain only integers or floats
+
+>>> matrix_mul([[1]], [["5"]])
+Traceback (most recent call last):
+TypeError: m_b should contain only integers or floats
+
+>>> matrix_mul([[1], [1, 1]], [[5]])
+Traceback (most recent call last):
+TypeError: each row of m_a must be of the same size
+
+>>> matrix_mul([[1, 1], [1, 1]], [[5], [5, 5]])
+Traceback (most recent call last):
+TypeError: each row of m_b must be of the same size
+
+>>> matrix_mul([[1, 1], [1, 1]], [[5, 5], [5, 5], [5, 5]])
+Traceback (most recent call last):
+ValueError: m_a and m_b can't be multiplied
+
+MATRICES OF INTEGERS
+====================
+
+>>> matrix_mul([[2]], [[4]])
+[[8]]
+
+>>> matrix_mul([[2, 3]], [[4], [4]])
+[[20]]
+
+>>> matrix_mul([[2]], [[4, 5]])
+[[8, 10]]
+
+matrix_mul([[2, 3], [4, 5]], [[4], [4]])
+[[20], [36]]
+
+>>> matrix_mul([[2]], [[4, 5, 6]])
+[[8, 10, 12]]
+
+>>> matrix_mul([[2], [3]], [[4, 5, 6, 7]])
+[[8, 10, 12, 14], [12, 15, 18, 21]]
+
+>>> matrix_mul([[2, 3, 4], [4, 5, 6], [7, 8, 9]], [[2, 3, 4], [4, 5, 6], [7, 8, 9]])
+[[44, 53, 62], [70, 85, 100], [109, 133, 157]]
+
+MATRICES OF FLOATS
+===================
+
+>>> matrix_mul([[2.02]], [[4.45]])
+[[8.989]]
+
+>>> matrix_mul([[2.888888, 3.658]], [[4.245], [4.00005]])
+[[26.89551246]]
