@@ -25,42 +25,40 @@ if __name__ == "__main__":
                 board[i].append("free")
         return board
 
-
     def takeCells(boardCopy, i, j):
-        for l in range(n):
-            boardCopy[i][l] = "attack"
-            boardCopy[l][j] = "attack"
+        for m in range(n):
+            boardCopy[i][m] = "attack"
+            boardCopy[m][j] = "attack"
 
         k = i
-        l = j
-        while k >= 0 and l >= 0:
-            boardCopy[k][l] = "attack"
+        m = j
+        while k >= 0 and m >= 0:
+            boardCopy[k][m] = "attack"
             k -= 1
-            l -= 1
+            m -= 1
 
         k = i
-        l = j
-        while k < n and l < n:
-            boardCopy[k][l] = "attack"
+        m = j
+        while k < n and m < n:
+            boardCopy[k][m] = "attack"
             k += 1
-            l += 1
+            m += 1
 
         k = i
-        l = j
-        while k >= 0 and l < n:
-            boardCopy[k][l] = "attack"
+        m = j
+        while k >= 0 and m < n:
+            boardCopy[k][m] = "attack"
             k -= 1
-            l += 1
+            m += 1
 
         k = i
-        l = j
-        while k < n and l >= 0:
-            boardCopy[k][l] = "attack"
+        m = j
+        while k < n and m >= 0:
+            boardCopy[k][m] = "attack"
             k += 1
-            l -= 1
+            m -= 1
 
         return boardCopy
-
 
     solutions = []
 
@@ -77,7 +75,6 @@ if __name__ == "__main__":
                     break
         if len(solution) == n:
             solutions.append(solution)
-
 
     for solution in solutions:
         print(solution)
