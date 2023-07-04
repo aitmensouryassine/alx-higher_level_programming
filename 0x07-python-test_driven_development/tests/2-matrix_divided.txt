@@ -45,6 +45,10 @@ Empty matrix
 
 Matrix is not list of lists
 ===========================
+>>> print(matrix_divided([], 2))
+Traceback (most recent call last):
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
 >>> print(matrix_divided([1, 2, 3], 2))
 Traceback (most recent call last):
 TypeError: matrix must be a matrix (list of lists) of integers/floats
