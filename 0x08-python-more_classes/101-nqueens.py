@@ -2,6 +2,54 @@
 import sys
 
 
+""" Nqueens solution with backtracking """
+
+
+class Nqueens():
+    """ Nqueens class """
+
+    def __init__(self, n):
+        self.n = n
+        self.board = [[0] * n for i in range(n)]
+
+        self.cols = set()
+        self.rDigs = set()
+        self.lDigs = set()
+
+        self.solutions = []
+
+    def backtrack(self, row=0):
+        if row == self.n:
+            result = []
+            for row in self.board:
+                for position in row:
+                    position and result.append(position)
+            self.solutions.append(result)
+            return
+
+        for col in range(self.n):
+            if col in self.cols or \
+               (row + col) in self.rDigs or (row - col) in self.lDigs:
+                continue
+
+            self.cols.add(col)
+            self.rDigs.add(row + col)
+            self.lDigs.add(row - col)
+            self.board[row][col] = [row, col]
+
+            self.backtrack(row + 1)
+
+            self.cols.remove(col)
+            self.rDigs.remove(row + col)
+            self.lDigs.remove(row - col)
+            self.board[row][col] = 0
+
+    def solution(self):
+        self.backtrack()
+        for solution in self.solutions:
+            print(solution)
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
@@ -17,64 +65,5 @@ if __name__ == "__main__":
         print("N must be at least 4")
         sys.exit(1)
 
-    def createBoard(size):
-        board = []
-        for i in range(size):
-            board.append([])
-            for j in range(size):
-                board[i].append("free")
-        return board
-
-    def takeCells(boardCopy, i, j):
-        for m in range(n):
-            boardCopy[i][m] = "attack"
-            boardCopy[m][j] = "attack"
-
-        k = i
-        m = j
-        while k >= 0 and m >= 0:
-            boardCopy[k][m] = "attack"
-            k -= 1
-            m -= 1
-
-        k = i
-        m = j
-        while k < n and m < n:
-            boardCopy[k][m] = "attack"
-            k += 1
-            m += 1
-
-        k = i
-        m = j
-        while k >= 0 and m < n:
-            boardCopy[k][m] = "attack"
-            k -= 1
-            m += 1
-
-        k = i
-        m = j
-        while k < n and m >= 0:
-            boardCopy[k][m] = "attack"
-            k += 1
-            m -= 1
-
-        return boardCopy
-
-    solutions = []
-
-    for posi in range(n):
-        boardcopy = createBoard(n)
-        solution = []
-        for j in range(posi):
-            boardcopy[0][j] = "attack"
-        for i in range(n):
-            for j in range(n):
-                if boardcopy[i][j] != "attack":
-                    solution.append([i, j])
-                    boardcopy = takeCells(boardcopy, i, j)
-                    break
-        if len(solution) == n:
-            solutions.append(solution)
-
-    for solution in solutions:
-        print(solution)
+    nq = Nqueens(n)
+    nq.solution()
