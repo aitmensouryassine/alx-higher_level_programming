@@ -23,6 +23,10 @@ NUMBERS
 >>> add_integer(100.3, -2)
 98
 
+``add_integer`` float overflow
+>>> add_integer(0.00000000000000045, 5)
+5
+
 NON-NUMBERS
 ===========
 
@@ -45,3 +49,7 @@ TypeError: b must be an integer
 >>> add_integer(None)
 Traceback (most recent call last):
 TypeError: a must be an integer
+
+>>> add_integer (float('nan'), float('nan'))
+Traceback (most recent call last):
+ValueError: cannot convert float NaN to integer
