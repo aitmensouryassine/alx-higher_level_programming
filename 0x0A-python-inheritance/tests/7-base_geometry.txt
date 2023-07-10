@@ -25,7 +25,7 @@ TypeError: name must be an integer
 
 >>> bg.integer_validator("name", -7.5)
 Traceback (most recent call last):
-ValueError: name must be greater than 0
+TypeError: name must be an integer
 
 >>> bg.integer_validator("name", True)
 Traceback (most recent call last):
