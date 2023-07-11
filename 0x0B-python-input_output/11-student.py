@@ -6,6 +6,8 @@ class Student():
     """ defines a student """
 
     def __init__(self, first_name, last_name, age):
+        """ intitialize a new student """
+
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
@@ -20,4 +22,5 @@ class Student():
 
     def reload_from_json(self, json):
         for key in self.__dict__:
-            setattr(self, key, json[key])
+            if key in json:
+                setattr(self, key, json[key])
