@@ -26,7 +26,7 @@ if __name__ == "__main__":
             else:
                 count += 1
 
-            stat = line.split(" ")
+            stat = line.split()
 
             try:
                 status_code = stat[-2]
@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
             if status_code in stats:
                 stats[status_code] += 1
+            status_code = 0
 
         print_stats(stats)
 
