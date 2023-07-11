@@ -27,8 +27,8 @@ if __name__ == "__main__":
             stat = line.split(" ")
 
             try:
-                status_code = stat[7]
-                file_size = stat[8]
+                status_code = stat[-2]
+                file_size = stat[-1]
                 stats["size"] += int(file_size)
             except Exception:
                 pass
