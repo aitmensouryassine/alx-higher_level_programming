@@ -11,6 +11,7 @@ def print_stats(stats):
         if key != "size" and stats[key] != 0:
             print("{}: {}".format(key, stats[key]))
 
+
 if __name__ == "__main__":
     stats = {"size": 0, "200": 0, "301": 0, "400": 0,
              "401": 0, "403": 0, "404": 0, "405": 0, "500": 0}
