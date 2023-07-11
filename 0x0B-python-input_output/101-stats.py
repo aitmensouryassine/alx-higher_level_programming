@@ -29,12 +29,12 @@ if __name__ == "__main__":
             try:
                 status_code = stat[7]
                 file_size = stat[8]
+                stats["size"] += int(file_size)
             except Exception:
                 pass
 
             if status_code in stats:
                 stats[status_code] += 1
-            stats["size"] += int(file_size)
 
             count += 1
         print_stats(stats)
