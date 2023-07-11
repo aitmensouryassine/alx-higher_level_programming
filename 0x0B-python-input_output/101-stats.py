@@ -22,7 +22,9 @@ if __name__ == "__main__":
         for line in sys.stdin:
             if count == 10:
                 print_stats(stats)
-                count = 0
+                count = 1
+            else:
+                count += 1
 
             stat = line.split(" ")
 
@@ -36,7 +38,6 @@ if __name__ == "__main__":
             if status_code in stats:
                 stats[status_code] += 1
 
-            count += 1
         print_stats(stats)
 
     except KeyboardInterrupt as err:
