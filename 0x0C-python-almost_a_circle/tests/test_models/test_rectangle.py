@@ -92,6 +92,138 @@ class TestPrivateAttrs(unittest.TestCase):
             Rectangle(1, 2).__y
 
 
+class TestAttrValidation(unittest.TestCase):
+
+    def test_width_validation(self):
+        with self.assertRaises(TypeError):
+            Rectangle(3.5, 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle((4, 5), 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle([5, 6], 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle("string", 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle(None, 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle(True, 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle(b'string', 1)
+
+        with self.assertRaises(TypeError):
+            Rectangle(complex(1, 2), 1)
+
+        with self.assertRaises(ValueError):
+            Rectangle(0, 1)
+
+        with self.assertRaises(ValueError):
+            Rectangle(-1, 1)
+
+        r = Rectangle(1, 5)
+        self.assertEqual(r.width, 1)
+
+
+    def test_height_validation(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, None)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 3.5)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, (4, 5))
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, [5, 6])
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, "string")
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, True)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, b'string')
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, complex(1, 2))
+
+        with self.assertRaises(ValueError):
+            Rectangle(1, 0)
+
+        with self.assertRaises(ValueError):
+            Rectangle(1, -1)
+
+        r = Rectangle(1, 5)
+        self.assertEqual(r.height, 5)
+
+    def test_x_validation(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, None)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 3.5)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, (4, 5))
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, [5, 6])
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, "string")
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, True)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, b'string')
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, complex(1, 2))
+
+        with self.assertRaises(ValueError):
+            Rectangle(1, 1, -1)
+
+        r = Rectangle(1, 1, 5)
+        self.assertEqual(r.x, 5)
+
+    def test_y_validation(self):
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, None)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, 3.5)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, (4, 5))
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, [5, 6])
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, "string")
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, True)
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, b'string')
+
+        with self.assertRaises(TypeError):
+            Rectangle(1, 1, 0, complex(1, 2))
+
+        with self.assertRaises(ValueError):
+            Rectangle(1, 1, 0, -1)
+
+        r = Rectangle(1, 1, 0, 5)
+        self.assertEqual(r.y, 5)
 
 if __name__ == "__main__":
     unittest.main()
