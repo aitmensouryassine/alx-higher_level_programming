@@ -4,6 +4,27 @@ import unittest
 from models.base import Base
 from models.rectangle import Rectangle
 
+
+class _AssertStdoutContext:
+
+    def __init__(self, testcase, expected):
+        self.testcase = testcase
+        self.expected = expected
+        self.captured = io.StringIO()
+
+    def __enter__(self):
+        sys.stdout = self.captured
+        return self
+
+    def __exit__(self, exc_type, exc_value, tb):
+        sys.stdout = sys.__stdout__
+        captured = self.captured.getvalue()
+        self.testcase.assertEqual(captured, self.expected)
+
+    def assertStdout(self, expected_output):
+        return _AssertStdoutContext(self, expected_output)
+
+
 class TestRectangleInstantiation(unittest.TestCase):
 
     def setUp(self):
@@ -235,35 +256,29 @@ class TestArea(unittest.TestCase):
         self.assertEqual(Rectangle(4, 2, 0, 0, 7).area(), 8)
 
 
-class TestDisplayRectangle(unittest.TestCase):
-
-    def assertStdout(self, expected_output):
-        return _AssertStdoutContext(self, expected_output)
+class TestDisplayRectangle(unittest.TestCase, _AssertStdoutContext):
 
     def test_display_w_h(self):
         with self.assertStdout("##\n##\n"):
             Rectangle(2, 2).display()
 
-            
-""" END OF TESTS """
+class TestStrRectangle(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+
+    def test_str_w_h(self):
+        with self.assertStdout("[Rectangle] (1) 0/0 - 2/4\n"):
+            print(Rectangle(2, 4))
+
+    def test_str_w_h_x_y(self):
+        with self.assertStdout("[Rectangle] (1) 10/20 - 2/4\n"):
+            print(Rectangle(2, 4, 10, 20))
+
+    def test_str_w_h_x_y_id(self):
+        with self.assertStdout("[Rectangle] (11) 10/20 - 2/4\n"):
+            print(Rectangle(2, 4, 10, 20, 11))
 
 
-class _AssertStdoutContext:
-
-    def __init__(self, testcase, expected):
-        self.testcase = testcase
-        self.expected = expected
-        self.captured = io.StringIO()
-
-    def __enter__(self):
-        sys.stdout = self.captured
-        return self
-
-    def __exit__(self, exc_type, exc_value, tb):
-        sys.stdout = sys.__stdout__
-        captured = self.captured.getvalue()
-        self.testcase.assertEqual(captured, self.expected)
-        
-        
 if __name__ == "__main__":
     unittest.main()
