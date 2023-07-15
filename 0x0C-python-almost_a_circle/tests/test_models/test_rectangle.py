@@ -277,16 +277,67 @@ class TestStrRectangle(unittest.TestCase, _AssertStdoutContext):
         Base.reset()
 
     def test_str_w_h(self):
-        with self.assertStdout("[Rectangle] (1) 0/0 - 2/4\n"):
-            print(Rectangle(2, 4))
+        with self.assertStdout("[Rectangle] (1) 0/0 - 2/4"):
+            print(Rectangle(2, 4), end="")
 
     def test_str_w_h_x_y(self):
-        with self.assertStdout("[Rectangle] (1) 10/20 - 2/4\n"):
-            print(Rectangle(2, 4, 10, 20))
+        with self.assertStdout("[Rectangle] (1) 10/20 - 2/4"):
+            print(Rectangle(2, 4, 10, 20), end="")
 
     def test_str_w_h_x_y_id(self):
-        with self.assertStdout("[Rectangle] (11) 10/20 - 2/4\n"):
-            print(Rectangle(2, 4, 10, 20, 11))
+        with self.assertStdout("[Rectangle] (11) 10/20 - 2/4"):
+            print(Rectangle(2, 4, 10, 20, 11), end="")
+
+class TestUpdateRectangle(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+    
+    def test_update_no_args(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update()
+        with self.assertStdout("[Rectangle] (1) 5/5 - 5/5"):
+            print(r, end="")
+
+    def test_update_id(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(45)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 5/5"):
+            print(r, end="")
+
+    def test_update_id_none(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(None)
+        with self.assertStdout("[Rectangle] (2) 5/5 - 5/5"):
+            print(r, end="")
+
+        r.update(None)
+        with self.assertStdout("[Rectangle] (3) 5/5 - 5/5"):
+            print(r, end="")
+
+    def test_update_width(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(45, 7)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 7/5"):
+            print(r, end="")
+
+    def test_update_height(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(45, 7, 8)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 7/8"):
+            print(r, end="")
+
+    def test_update_x(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(45, 7, 8, 9)
+        with self.assertStdout("[Rectangle] (45) 9/5 - 7/8"):
+            print(r, end="")
+
+    def test_update_y(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(45, 7, 8, 9, 10)
+        with self.assertStdout("[Rectangle] (45) 9/10 - 7/8"):
+            print(r, end="")
 
 
 if __name__ == "__main__":
