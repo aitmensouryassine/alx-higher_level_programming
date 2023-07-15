@@ -73,5 +73,25 @@ class TestRectangleSettersAndGetters(unittest.TestCase):
         self.assertEqual(r1.y, 15)
 
 
+class TestPrivateAttrs(unittest.TestCase):
+
+    def test_width_private(self):
+        with self.assertRaises(AttributeError):
+            Rectangle(1, 2).__width
+
+    def test_height_private(self):
+        with self.assertRaises(AttributeError):
+            Rectangle(1, 2).__height
+
+    def test_x_private(self):
+        with self.assertRaises(AttributeError):
+            Rectangle(1, 2).__x
+
+    def test_y_private(self):
+        with self.assertRaises(AttributeError):
+            Rectangle(1, 2).__y
+
+
+
 if __name__ == "__main__":
     unittest.main()
