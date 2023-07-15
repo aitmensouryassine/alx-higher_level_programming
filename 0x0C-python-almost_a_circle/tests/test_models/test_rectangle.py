@@ -1,3 +1,5 @@
+import sys
+import io
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
@@ -225,5 +227,43 @@ class TestAttrValidation(unittest.TestCase):
         r = Rectangle(1, 1, 0, 5)
         self.assertEqual(r.y, 5)
 
+
+class TestArea(unittest.TestCase):
+
+    def test_area(self):
+        self.assertEqual(Rectangle(4, 2).area(), 8)
+        self.assertEqual(Rectangle(4, 2, 0, 0, 7).area(), 8)
+
+
+class TestDisplayRectangle(unittest.TestCase):
+
+    def assertStdout(self, expected_output):
+        return _AssertStdoutContext(self, expected_output)
+
+    def test_display_w_h(self):
+        with self.assertStdout("##\n##\n"):
+            Rectangle(2, 2).display()
+
+            
+""" END OF TESTS """
+
+
+class _AssertStdoutContext:
+
+    def __init__(self, testcase, expected):
+        self.testcase = testcase
+        self.expected = expected
+        self.captured = io.StringIO()
+
+    def __enter__(self):
+        sys.stdout = self.captured
+        return self
+
+    def __exit__(self, exc_type, exc_value, tb):
+        sys.stdout = sys.__stdout__
+        captured = self.captured.getvalue()
+        self.testcase.assertEqual(captured, self.expected)
+        
+        
 if __name__ == "__main__":
     unittest.main()
