@@ -288,7 +288,7 @@ class TestStrRectangle(unittest.TestCase, _AssertStdoutContext):
         with self.assertStdout("[Rectangle] (11) 10/20 - 2/4"):
             print(Rectangle(2, 4, 10, 20, 11), end="")
 
-class TestUpdateRectangle(unittest.TestCase, _AssertStdoutContext):
+class TestUpdateRectangle_Args(unittest.TestCase, _AssertStdoutContext):
 
     def setUp(self):
         Base.reset()
@@ -337,6 +337,47 @@ class TestUpdateRectangle(unittest.TestCase, _AssertStdoutContext):
         r = Rectangle(5, 5, 5, 5)
         r.update(45, 7, 8, 9, 10)
         with self.assertStdout("[Rectangle] (45) 9/10 - 7/8"):
+            print(r, end="")
+
+class TestUpdateRectangle_Kwargs(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+
+    def test_update_no_kwargs(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update()
+        with self.assertStdout("[Rectangle] (1) 5/5 - 5/5"):
+            print(r, end="")
+
+    def test_update_id(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=45)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 5/5"):
+            print(r, end="")
+
+    def test_update_width(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=45, width=9)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 9/5"):
+            print(r, end="")
+
+    def test_update_height(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=45, width=9, height=10)
+        with self.assertStdout("[Rectangle] (45) 5/5 - 9/10"):
+            print(r, end="")
+
+    def test_update_x(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=45, x=7, width=9, height=10)
+        with self.assertStdout("[Rectangle] (45) 7/5 - 9/10"):
+            print(r, end="")
+
+    def test_update_y(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=45, x=7, y=8, width=9, height=10)
+        with self.assertStdout("[Rectangle] (45) 7/8 - 9/10"):
             print(r, end="")
 
 
