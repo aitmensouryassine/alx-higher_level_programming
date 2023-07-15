@@ -262,6 +262,15 @@ class TestDisplayRectangle(unittest.TestCase, _AssertStdoutContext):
         with self.assertStdout("##\n##\n"):
             Rectangle(2, 2).display()
 
+    def test_display_w_h_x(self):
+        with self.assertStdout("  ##\n  ##\n"):
+            Rectangle(2, 2, 2).display()
+
+    def test_display_w_h_x(self):
+        with self.assertStdout("\n\n  ##\n  ##\n"):
+            Rectangle(2, 2, 2, 2).display()
+
+
 class TestStrRectangle(unittest.TestCase, _AssertStdoutContext):
 
     def setUp(self):
