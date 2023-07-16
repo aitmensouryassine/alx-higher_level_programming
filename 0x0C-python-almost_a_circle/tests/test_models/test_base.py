@@ -369,6 +369,9 @@ class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
         self.assertFalse(r2 is rects[1])
         self.assertFalse(r2 == rects[1])
 
+        self.assertTrue(type(rects[0]) == Rectangle)
+        self.assertTrue(type(rects[1]) == Rectangle)
+
     def test_lff_square(self):
         s1 = Square(10, 7, 8)
         s2 = Square(2)
@@ -389,6 +392,9 @@ class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
         self.assertFalse(s2 is squares[1])
         self.assertFalse(s2 == squares[1])
 
+        self.assertTrue(type(squares[0]) == Square)
+        self.assertTrue(type(squares[1]) == Square)
+        
         
 if __name__ == "__main__":
     unittest.main()
