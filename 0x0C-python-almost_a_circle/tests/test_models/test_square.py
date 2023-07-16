@@ -153,3 +153,88 @@ class TestSquareSizeValidation(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             Square(-1)
+
+
+class TestUpdateSquare_Args(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+    
+    def test_update_no_args(self):
+        s = Square(5, 5, 5)
+        s.update()
+        with self.assertStdout("[Square] (1) 5/5 - 5"):
+            print(s, end="")
+
+    def test_update_id(self):
+        s = Square(5, 5, 5)
+        s.update(45)
+        with self.assertStdout("[Square] (45) 5/5 - 5"):
+            print(s, end="")
+
+    def test_update_id_none(self):
+        s = Square(5, 5, 5)
+        s.update(None)
+        with self.assertStdout("[Square] (2) 5/5 - 5"):
+            print(s, end="")
+
+        s.update(None)
+        with self.assertStdout("[Square] (3) 5/5 - 5"):
+            print(s, end="")
+
+    def test_update_size(self):
+        s = Square(5, 5, 5)
+        s.update(45, 7)
+        with self.assertStdout("[Square] (45) 5/5 - 7"):
+            print(s, end="")
+
+    def test_update_x(self):
+        s = Square(5, 5, 5)
+        s.update(45, 7, 8)
+        with self.assertStdout("[Square] (45) 8/5 - 7"):
+            print(s, end="")
+
+    def test_update_y(self):
+        s = Square(5, 5, 5)
+        s.update(45, 7, 8, 9)
+        with self.assertStdout("[Square] (45) 8/9 - 7"):
+            print(s, end="")
+
+class TestUpdateSquare_Kwargs(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+
+    def test_update_no_kwargs(self):
+        s = Square(5, 5, 5)
+        s.update()
+        with self.assertStdout("[Square] (1) 5/5 - 5"):
+            print(s, end="")
+
+    def test_update_id(self):
+        s = Square(5, 5, 5)
+        s.update(id=45)
+        with self.assertStdout("[Square] (45) 5/5 - 5"):
+            print(s, end="")
+
+    def test_update_size(self):
+        s = Square(5, 5, 5)
+        s.update(id=45, size=9)
+        with self.assertStdout("[Square] (45) 5/5 - 9"):
+            print(s, end="")
+
+    def test_update_x(self):
+        s = Square(5, 5, 5)
+        s.update(id=45, x=7, size=9)
+        with self.assertStdout("[Square] (45) 7/5 - 9"):
+            print(s, end="")
+
+    def test_update_y(self):
+        s = Square(5, 5, 5)
+        s.update(id=45, x=7, y=8, size=9)
+        with self.assertStdout("[Square] (45) 7/8 - 9"):
+            print(s, end="")
+
+
+if __name__ == "__main__":
+    unittest.main()
