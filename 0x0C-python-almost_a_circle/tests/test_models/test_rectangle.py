@@ -394,6 +394,6 @@ class TestRectToDictionary(unittest.TestCase, _AssertStdoutContext):
         with self.assertStdout("<class 'dict'>"):
             print(t, end="")
         
-        
+    
 if __name__ == "__main__":
     unittest.main()
