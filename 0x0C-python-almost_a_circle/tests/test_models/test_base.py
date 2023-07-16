@@ -23,7 +23,7 @@ class TestBaseClass(unittest.TestCase):
         b4.id = 4
         self.assertEqual(b4.id, 4)
 
-class TestBase_to_json_strin(unittest.TestCase):
+class TestBase_to_json_string(unittest.TestCase):
 
     def test_tjs_no_args(self):
         with self.assertRaises(TypeError):
@@ -147,6 +147,52 @@ class TestBase_save_to_file(unittest.TestCase):
         with open("Square.json") as f:
             self.assertTrue(len(f.read()), 79)
         
+class TestBase_from_json_string(unittest.TestCase):
+
+    def test_fjs_no_args(self):
+        with self.assertRaises(TypeError):
+            Base.from_json_string()
+
+    def test_fjs_none(self):
+        list_input = Base.from_json_string(None)
+        self.assertEqual(list_input, [])
+
+    def test_fjs_empty_list(self):
+        list_input = Base.from_json_string("[]")
+        self.assertEqual(list_input, [])
+
+    def test_fjs_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Base.from_json_string("[]", 1)
+
+    def test_rect_fjs_type(self):
+        list_input = Rectangle.from_json_string('[{"height": 4, "width": 10, "id": 89}]')
+        self.assertEqual(list, type(list_input))
+        
+    def test_rect_fjs_one_dict(self):
+        json_string = '[{"height": 4, "width": 10, "id": 89}]'
+        list_input = Rectangle.from_json_string(json_string)
+        self.assertTrue(len(list_input) == 1)
+        
+    def test_rect_fjs_two_dicts(self):
+        json_string = '[{"height": 4, "width": 10, "id": 89}, {"height": 7, "width": 5, "id": 99}]'
+        list_input = Rectangle.from_json_string(json_string)
+        self.assertTrue(len(list_input) == 2)
+
+    def test_square_fjs_type(self):
+        list_input = Square.from_json_string('[{"size": 4, "id": 89}]')
+        self.assertEqual(list, type(list_input))
+        
+    def test_square_fjs_one_dict(self):
+        json_string = '[{"size": 4, "id": 89}]'
+        list_input = Square.from_json_string(json_string)
+        self.assertTrue(len(list_input) == 1)
+        
+    def test_square_fjs_two_dicts(self):
+        json_string = '[{"size": 4, "id": 89}, {"size": 7, "id": 99}]'
+        list_input = Square.from_json_string(json_string)
+        self.assertTrue(len(list_input) == 2)
+
 
 if __name__ == "__main__":
     unittest.main()
