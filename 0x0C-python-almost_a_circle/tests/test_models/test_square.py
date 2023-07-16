@@ -236,5 +236,19 @@ class TestUpdateSquare_Kwargs(unittest.TestCase, _AssertStdoutContext):
             print(s, end="")
 
 
+class TestSquareToDictionary(unittest.TestCase, _AssertStdoutContext):
+
+    def test_to_dictionary(self):
+        s = Square(1, 2, 3, 4)
+        self.assertCountEqual(s.to_dictionary(), {'x': 2, 'y': 3, 'id': 4, 'size': 1})
+
+    def test_to_dict_type(self):
+        s = Square(4)
+        t = type(s.to_dictionary())
+        
+        with self.assertStdout("<class 'dict'>"):
+            print(t, end="")
+
+
 if __name__ == "__main__":
     unittest.main()
