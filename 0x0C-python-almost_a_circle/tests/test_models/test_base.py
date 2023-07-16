@@ -1,8 +1,30 @@
+import sys
+import io
 import os
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
+
+
+class _AssertStdoutContext:
+
+    def __init__(self, testcase, expected):
+        self.testcase = testcase
+        self.expected = expected
+        self.captured = io.StringIO()
+
+    def __enter__(self):
+        sys.stdout = self.captured
+        return self
+
+    def __exit__(self, exc_type, exc_value, tb):
+        sys.stdout = sys.__stdout__
+        captured = self.captured.getvalue()
+        self.testcase.assertEqual(captured, self.expected)
+
+    def assertStdout(self, expected_output):
+        return _AssertStdoutContext(self, expected_output)
 
 
 class TestBaseClass(unittest.TestCase):
@@ -192,6 +214,59 @@ class TestBase_from_json_string(unittest.TestCase):
         json_string = '[{"size": 4, "id": 89}, {"size": 7, "id": 99}]'
         list_input = Square.from_json_string(json_string)
         self.assertTrue(len(list_input) == 2)
+
+
+class TestBase_dict_to_inst(unittest.TestCase, _AssertStdoutContext):
+
+    def setUp(self):
+        Base.reset()
+
+    def test_dti_no_args(self):
+        self.assertTrue(Base.create() == None)
+
+    def test_dti_empty(self):
+        d = {}
+        self.assertTrue(Base.create(**d) == None)
+
+    def test_dti_more_than_one_arg(self):
+       with self.assertRaises(TypeError):
+           Base.create(5)
+
+    def test_dti_rect(self):
+        d = {"width" : 5, "height": 4}
+        r = Rectangle.create(**d)
+        with self.assertStdout("[Rectangle] (1) 0/0 - 5/4"):
+            print(r, end="")
+
+    def test_dti_rect_is_rect(self):
+        r1 = Rectangle(3, 5, 1)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertFalse(r1 is r2)
+
+    def test_dti_rect_equal_rect(self):
+        r1 = Rectangle(3, 5, 1)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertFalse(r1 == r2)
+
+    def test_dti_square(self):
+        d = {"size" : 5}
+        s = Square.create(**d)
+        with self.assertStdout("[Square] (1) 0/0 - 5"):
+            print(s, end="")
+
+    def test_dti_square_is_square(self):
+        s1 = Square(3)
+        s1_dictionary = s1.to_dictionary()
+        s2 = Square.create(**s1_dictionary)
+        self.assertFalse(s1 is s2)
+
+    def test_dti_rect_equal_rect(self):
+        s1 = Square(3)
+        s1_dictionary = s1.to_dictionary()
+        s2 = Square.create(**s1_dictionary)
+        self.assertFalse(s1 == s2)
 
 
 if __name__ == "__main__":
