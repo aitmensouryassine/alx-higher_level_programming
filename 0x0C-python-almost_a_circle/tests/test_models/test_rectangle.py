@@ -381,5 +381,19 @@ class TestUpdateRectangle_Kwargs(unittest.TestCase, _AssertStdoutContext):
             print(r, end="")
 
 
+class TestRectToDictionary(unittest.TestCase, _AssertStdoutContext):
+
+    def test_to_dictionary(self):
+        r = Rectangle(1, 2, 3, 4, 5)
+        self.assertCountEqual(r.to_dictionary(), {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1})
+
+    def test_to_dict_type(self):
+        r = Rectangle(4, 5)
+        t = type(r.to_dictionary())
+        
+        with self.assertStdout("<class 'dict'>"):
+            print(t, end="")
+        
+        
 if __name__ == "__main__":
     unittest.main()

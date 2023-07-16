@@ -94,4 +94,8 @@ class Rectangle(Base):
         elif kwargs is not None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-             
+
+    def to_dictionary(self):
+        attrs = ["id", "width", "height", "x", "y"]
+        return {attr:getattr(self, attr) for attr in attrs}
+            
