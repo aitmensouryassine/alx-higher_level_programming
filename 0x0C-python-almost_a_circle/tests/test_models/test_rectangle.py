@@ -356,6 +356,12 @@ class TestUpdateRectangle_Kwargs(unittest.TestCase, _AssertStdoutContext):
         with self.assertStdout("[Rectangle] (45) 5/5 - 5/5"):
             print(r, end="")
 
+    def test_update_id_none(self):
+        r = Rectangle(5, 5, 5, 5)
+        r.update(id=None)
+        with self.assertStdout("[Rectangle] (2) 5/5 - 5/5"):
+            print(r, end="")
+
     def test_update_width(self):
         r = Rectangle(5, 5, 5, 5)
         r.update(id=45, width=9)
