@@ -45,6 +45,46 @@ class TestBaseClass(unittest.TestCase):
         b4.id = 4
         self.assertEqual(b4.id, 4)
 
+    def test_id_int(self):
+        self.assertEqual(Base(5).id, 5)
+
+    def test_id_str(self):
+        self.assertEqual(Base("yassine").id, "yassine")
+    
+    def test_id_tuple(self):
+        self.assertEqual(Base((1, 2)).id, (1, 2))
+        
+    def test_id_list(self):
+        self.assertEqual(Base([1, 2]).id, [1, 2])
+        
+    def test_id_dict(self):
+        self.assertEqual(Base({"t": 1}).id, {"t": 1})
+        
+    def test_id_float(self):
+        self.assertEqual(Base(3.5).id, 3.5)
+        
+    def test_id_byte(self):
+        self.assertEqual(Base(b'yassine').id, b'yassine')
+        
+    def test_id_bool(self):
+        self.assertEqual(Base(True).id, True)
+        
+    def test_id_set(self):
+        self.assertEqual(Base({0, 1, 2}).id, {0, 1, 2})
+        
+    def test_id_inf(self):
+        self.assertEqual(Base(float('inf')).id, float('inf'))
+        
+    def test_id_nan(self):
+        self.assertNotEqual(Base(float('nan')).id, float('nan'))
+
+    def test_id_range(self):
+        self.assertEqual(Base(range(5)).id, range(5))
+
+    def test_id_two_args(self):
+        with self.assertRaises(TypeError):
+            Base(1, 1)
+
 class TestBase_to_json_string(unittest.TestCase):
 
     def test_tjs_no_args(self):
