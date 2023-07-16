@@ -92,3 +92,64 @@ class TestStrSquare(unittest.TestCase, _AssertStdoutContext):
     def test_str_size_x_y_id(self):
         with self.assertStdout("[Square] (11) 10/20 - 5"):
             print(Square(5, 10, 20, 11), end="")
+
+    def test_str_set_size(self):
+        s = Square(8)
+        with self.assertStdout("[Square] (1) 0/0 - 8"):
+            print(s, end="")
+
+        s.size = 10
+        with self.assertStdout("[Square] (1) 0/0 - 10"):
+            print(s, end="")
+
+
+class TestSquareSettersAndGetters(unittest.TestCase):
+
+    def setUp(self):
+        Base.reset()
+
+    def test_set_get_size(self):
+        r = Square(4)
+        self.assertEqual(r.size, 4)
+
+        r.size = 8
+        self.assertEqual(r.size, 8)
+
+    def test_size_str(self):
+        s = Square(5)
+        with self.assertRaises(TypeError):
+            s.size = "5"
+
+
+class TestSquareSizeValidation(unittest.TestCase):
+
+    def test_width_validation(self):
+        with self.assertRaises(TypeError):
+            Square(3.5)
+
+        with self.assertRaises(TypeError):
+            Square((4, 5))
+
+        with self.assertRaises(TypeError):
+            Square([5, 6])
+
+        with self.assertRaises(TypeError):
+            Square("string")
+
+        with self.assertRaises(TypeError):
+            Square(None)
+
+        with self.assertRaises(TypeError):
+            Square(True)
+
+        with self.assertRaises(TypeError):
+            Square(b'string')
+
+        with self.assertRaises(TypeError):
+            Square(complex(1, 2))
+
+        with self.assertRaises(ValueError):
+            Square(0)
+
+        with self.assertRaises(ValueError):
+            Square(-1)
