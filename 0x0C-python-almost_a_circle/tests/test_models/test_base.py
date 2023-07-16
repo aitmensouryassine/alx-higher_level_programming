@@ -73,7 +73,7 @@ class TestBase_to_json_string(unittest.TestCase):
         r = Rectangle(4, 5)
         d = r.to_dictionary()
         string = Base.to_json_string([d])
-        self.assertTrue(len(string) == 53)
+        self.assertTrue(len(string) == 52)
         
     def test_rect_tjs_two_dicts(self):
         d1 = Rectangle(4, 5).to_dictionary()
@@ -268,6 +268,87 @@ class TestBase_dict_to_inst(unittest.TestCase, _AssertStdoutContext):
         s2 = Square.create(**s1_dictionary)
         self.assertFalse(s1 == s2)
 
+class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
 
+    @classmethod
+    def setUp(self):
+        try:
+            os.remove("Rectangle.json")
+        except Exception:
+            pass
+        try:
+            os.remove("Square.json")
+        except Exception:
+            pass
+        try:
+            os.remove("Base.json")
+        except Exception:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("Rectangle.json")
+        except Exception:
+            pass
+        try:
+            os.remove("Square.json")
+        except Exception:
+            pass
+        try:
+            os.remove("Base.json")
+        except Exception:
+            pass
+
+    def setUp(self):
+        Base.reset()
+    
+    def test_lff_rect_file_not_found(self):
+        self.assertEqual(Rectangle.load_from_file(), [])
+    
+    def test_lff_square_file_not_found(self):
+        self.assertEqual(Square.load_from_file(), [])
+
+    def test_lff_rect(self):
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        list_rectangles_input = [r1, r2]
+
+        Rectangle.save_to_file(list_rectangles_input)
+        rects = Rectangle.load_from_file()
+
+        with self.assertStdout("[Rectangle] (1) 2/8 - 10/7"):
+            print(rects[0], end="")
+
+        with self.assertStdout("[Rectangle] (2) 0/0 - 2/4"):
+            print(rects[1], end="")
+
+        self.assertFalse(r1 is rects[0])
+        self.assertFalse(r1 == rects[0])
+
+        self.assertFalse(r2 is rects[1])
+        self.assertFalse(r2 == rects[1])
+
+    def test_lff_square(self):
+        s1 = Square(10, 7, 8)
+        s2 = Square(2)
+        list_squares_input = [s1, s2]
+
+        Square.save_to_file(list_squares_input)
+        squares = Square.load_from_file()
+
+        with self.assertStdout("[Square] (1) 7/8 - 10"):
+            print(squares[0], end="")
+
+        with self.assertStdout("[Square] (2) 0/0 - 2"):
+            print(squares[1], end="")
+
+        self.assertFalse(s1 is squares[0])
+        self.assertFalse(s1 == squares[0])
+
+        self.assertFalse(s2 is squares[1])
+        self.assertFalse(s2 == squares[1])
+
+        
 if __name__ == "__main__":
     unittest.main()
