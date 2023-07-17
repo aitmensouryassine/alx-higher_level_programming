@@ -2,6 +2,7 @@
 """ Base Module """
 import json
 import csv
+import turtle
 
 
 class Base():
@@ -111,3 +112,36 @@ class Base():
                 return [cls.create(**dic) for dic in list_dicts]
         except FileNotFoundError:
             return []
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        wndw = turtle.Screen()
+        wndw.bgcolor("#000000")
+        wndw.title("Rectangles & Squares")
+        ttl = turtle.Turtle()
+
+        ttl.color = "#ff0000"
+        for sq in list_squares:
+            ttl.showtutrle()
+            ttl.up()
+            ttl.goto(sq.x, sq.y)
+            ttl.down()
+            for i in range(4):
+                ttl.forward(sq.size)
+                ttl.left(90)
+            ttl.hideturtle()
+                
+        ttl.color = "#00ff00"
+        for rect in list_rectangles:
+            ttl.showtutrle()
+            ttl.up()
+            ttl.goto(rect.x, rect.y)
+            ttl.down()
+            for i in range(2):
+                ttl.forward(rect.width)
+                ttl.left(90)
+                ttl.forward(rect.height)
+                ttl.left(90)
+            ttl.hideturtle()
+
+        turtle.exitonclick()
