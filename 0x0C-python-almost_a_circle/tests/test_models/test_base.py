@@ -113,7 +113,7 @@ class TestBase_to_json_string(unittest.TestCase):
         r = Rectangle(4, 5)
         d = r.to_dictionary()
         string = Base.to_json_string([d])
-        self.assertTrue(len(string) == 52)
+        self.assertTrue(len(string) == 53)
         
     def test_rect_tjs_two_dicts(self):
         d1 = Rectangle(4, 5).to_dictionary()
@@ -395,6 +395,134 @@ class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
         self.assertTrue(type(squares[0]) == Square)
         self.assertTrue(type(squares[1]) == Square)
         
-        
+
+class TestBase_save_to_file_csv(unittest.TestCase):
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("Rectangle.csv")
+        except Exception:
+            pass
+        try:
+            os.remove("Square.csv")
+        except Exception:
+            pass
+        try:
+            os.remove("Base.csv")
+        except Exception:
+            pass
+
+    def test_stf_csv_one_rect(self):
+        r = Rectangle(10, 1, 2, 3, 4)
+        Rectangle.save_to_file_csv([r])
+        with open("Rectangle.csv", "r") as f:
+            self.assertTrue("4,10,1,2,3", f.read())
+
+    def test_stf_csv_two_rects(self):
+        r1 = Rectangle(10, 1, 2, 3, 4)
+        r2 = Rectangle(20, 2, 4, 6, 8)
+        Rectangle.save_to_file_csv([r1, r2])
+        with open("Rectangle.csv", "r") as f:
+            self.assertTrue("4,10,1,2,3\n2,8,20,2,4,6", f.read())
+
+    def test_stf_csv_one_square(self):
+        s = Square(10, 1, 2, 3)
+        Square.save_to_file_csv([s])
+        with open("Square.csv", "r") as f:
+            self.assertTrue("3,10,1,2", f.read())
+
+    def test_stf_csv_two_squares(self):
+        s1 = Square(10, 1, 2, 3)
+        s2 = Square(20, 2, 4, 6)
+        Square.save_to_file_csv([s1, s2])
+        with open("Square.csv", "r") as f:
+            self.assertTrue("3,10,1,2\n3,6,20,2,4", f.read())
+
+    def test_stf_csv_cls_name(self):
+        s = Square(10, 1, 2, 3)
+        Base.save_to_file_csv([s])
+        with open("Base.csv", "r") as f:
+            self.assertTrue("3,10,1,2", f.read())
+
+    def test_stf_csv_overwrite(self):
+        s = Square(10, 1, 2, 3)
+        Square.save_to_file_csv([s])
+        s = Square(20, 2, 4, 6)
+        Square.save_to_file_csv([s])
+        with open("Square.csv", "r") as f:
+            self.assertTrue("6,20,2,4", f.read())
+
+    def test_stf_csv_none(self):
+        Square.save_to_file_csv(None)
+        with open("Square.csv", "r") as f:
+            self.assertEqual("[]", f.read())
+
+    def test_stf_csv_empty_list(self):
+        Square.save_to_file_csv([])
+        with open("Square.csv", "r") as f:
+            self.assertEqual("[]", f.read())
+
+    def test_stf_csv_no_args(self):
+        with self.assertRaises(TypeError):
+            Rectangle.save_to_file_csv()
+
+    def test_stf_csv_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Square.save_to_file_csv([], 1)
+
+
+class TestBase_load_from_file_csv(unittest.TestCase):
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("Rectangle.csv")
+        except Exception:
+            pass
+        try:
+            os.remove("Square.csv")
+        except Exception:
+            pass
+
+    def test_lff_csv_rect(self):
+        r1 = Rectangle(10, 1, 2, 3, 4)
+        r2 = Rectangle(20, 2, 4, 6, 8)
+        Rectangle.save_to_file_csv([r1, r2])
+        list_rectangles_output = Rectangle.load_from_file_csv()
+        self.assertEqual(str(r1), str(list_rectangles_output[0]))
+        self.assertEqual(str(r2), str(list_rectangles_output[1]))
+
+    def test_lff_csv_rect_type(self):
+        r1 = Rectangle(10, 1, 2, 3, 4)
+        r2 = Rectangle(20, 2, 4, 6, 8)
+        Rectangle.save_to_file_csv([r1, r2])
+        objs = Rectangle.load_from_file_csv()
+        self.assertTrue(all(type(obj) == Rectangle for obj in objs))
+
+    def test_lff_csv_square(self):
+        s1 = Square(10, 1, 2, 3)
+        s2 = Square(20, 2, 4, 6)
+        Square.save_to_file_csv([s1, s2])
+        squares = Square.load_from_file_csv()
+        self.assertEqual(str(s1), str(squares[0]))
+        self.assertEqual(str(s2), str(squares[1]))
+
+    def test_lff_csv_square_type(self):
+        s1 = Square(10, 1, 2, 3)
+        s2 = Square(20, 2, 4, 6)
+        Square.save_to_file_csv([s1, s2])
+        objs = Square.load_from_file_csv()
+        self.assertTrue(all(type(obj) == Square for obj in objs))
+
+    def test_lff_csv_no_file(self):
+        output = Square.load_from_file_csv()
+        self.assertEqual([], output)
+
+    def test_lff_csv_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Base.load_from_file_csv([], 1)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Base Module """
 import json
+import csv
 
 
 class Base():
@@ -71,5 +72,42 @@ class Base():
             dictionaries = cls.from_json_string(json_string)
             f.close()
             return [cls.create(**dic) for dic in dictionaries]
+        except FileNotFoundError:
+            return []
+
+    @staticmethod
+    def get_field_names(cls_name):
+        """ returns the field names for a given class """
+        if cls_name == "Rectangle":
+            return ["id", "width", "height", "x", "y"]
+        else:
+            return ["id", "size", "x", "y"]
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """ serializes in CSV """
+        filename = cls.__name__ + ".csv"
+
+        with open(filename, 'w+', newline='') as csvf:
+            if list_objs is None or list_objs == []:
+                csvf.write("[]")
+            else:
+                writer = csv.DictWriter(csvf,
+                                        fieldnames=cls.get_field_names(cls.__name__))
+                for obj in list_objs:
+                    writer.writerow(obj.to_dictionary())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """ deserializes in CSV """
+        filename = cls.__name__ + ".csv"
+
+        try:
+            with open(filename, "r", newline="") as csvf:
+                list_dicts = csv.DictReader(csvf,
+                                            fieldnames=cls.get_field_names(cls.__name__))
+                list_dicts = [{key: int(value) for key, value in dic.items()}
+                              for dic in list_dicts]
+                return [cls.create(**dic) for dic in list_dicts]
         except FileNotFoundError:
             return []
