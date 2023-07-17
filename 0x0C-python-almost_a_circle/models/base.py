@@ -93,8 +93,9 @@ class Base():
             if list_objs is None or list_objs == []:
                 csvf.write("[]")
             else:
+                fieldnames = cls.get_field_names(cls.__name__)
                 writer = csv.DictWriter(csvf,
-                                        fieldnames=cls.get_field_names(cls.__name__))
+                                        fieldnames=fieldnames)
                 for obj in list_objs:
                     writer.writerow(obj.to_dictionary())
 
@@ -105,8 +106,9 @@ class Base():
 
         try:
             with open(filename, "r", newline="") as csvf:
+                fieldnames = cls.get_field_names(cls.__name__)
                 list_dicts = csv.DictReader(csvf,
-                                            fieldnames=cls.get_field_names(cls.__name__))
+                                            fieldnames=fieldnames)
                 list_dicts = [{key: int(value) for key, value in dic.items()}
                               for dic in list_dicts]
                 return [cls.create(**dic) for dic in list_dicts]
@@ -134,7 +136,7 @@ class Base():
                 ttl.forward(sq.size)
                 ttl.left(90)
             ttl.hideturtle()
-                
+
         ttl.color("#00ff00")
         for rect in list_rectangles:
             ttl.showturtle()
