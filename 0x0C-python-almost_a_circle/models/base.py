@@ -33,7 +33,8 @@ class Base():
             if list_objs is None:
                 json_str = "[]"
             else:
-                json_str = cls.to_json_string([obj.to_dictionary() for obj in list_objs])
+                obj_list = [obj.to_dictionary() for obj in list_objs]
+                json_str = cls.to_json_string(obj_list)
             f.write(json_str)
 
     @staticmethod
@@ -50,9 +51,8 @@ class Base():
             elif cls.__name__ == "Rectangle":
                 obj = cls(1, 1)
 
-            obj.update(**dictionary)
-            return obj
-              
+        obj.update(**dictionary)
+        return obj
 
     @classmethod
     def load_from_file(cls):

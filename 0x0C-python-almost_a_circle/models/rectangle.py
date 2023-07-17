@@ -2,6 +2,7 @@
 """ Rectangle module """
 from models.base import Base
 
+
 class Rectangle(Base):
     """ Creates a rectangle """
 
@@ -15,6 +16,7 @@ class Rectangle(Base):
     @property
     def width(self):
         return self.__width
+
     @width.setter
     def width(self, value):
         if type(value) is not int:
@@ -26,6 +28,7 @@ class Rectangle(Base):
     @property
     def height(self):
         return self.__height
+
     @height.setter
     def height(self, value):
         if type(value) is not int:
@@ -37,6 +40,7 @@ class Rectangle(Base):
     @property
     def x(self):
         return self.__x
+
     @x.setter
     def x(self, value):
         if type(value) is not int:
@@ -48,6 +52,7 @@ class Rectangle(Base):
     @property
     def y(self):
         return self.__y
+
     @y.setter
     def y(self, value):
         if type(value) is not int:
@@ -71,7 +76,7 @@ class Rectangle(Base):
 
     def __str__(self):
         return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.x, self.y,
-                                                self.width, self.height)
+                                                       self.width, self.height)
 
     def update(self, *args, **kwargs):
         if args is not None and len(args) > 0:
@@ -109,5 +114,4 @@ class Rectangle(Base):
 
     def to_dictionary(self):
         attrs = ["id", "width", "height", "x", "y"]
-        return {attr:getattr(self, attr) for attr in attrs}
-            
+        return {attr: getattr(self, attr) for attr in attrs}
