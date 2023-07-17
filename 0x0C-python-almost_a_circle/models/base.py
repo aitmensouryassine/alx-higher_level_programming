@@ -115,12 +115,16 @@ class Base():
 
     @staticmethod
     def draw(list_rectangles, list_squares):
+        """ opens a window and draws all the Rectangles and Squares """
         wndw = turtle.Screen()
         wndw.bgcolor("#000000")
         wndw.title("Rectangles & Squares")
-        ttl = turtle.Turtle()
 
-        ttl.color = "#ff0000"
+        ttl = turtle.Turtle()
+        ttl.screen.bgcolor("#000000")
+        ttl.shape("turtle")
+
+        ttl.color("#ff0000")
         for sq in list_squares:
             ttl.showtutrle()
             ttl.up()
@@ -131,7 +135,7 @@ class Base():
                 ttl.left(90)
             ttl.hideturtle()
                 
-        ttl.color = "#00ff00"
+        ttl.color("#00ff00")
         for rect in list_rectangles:
             ttl.showtutrle()
             ttl.up()
