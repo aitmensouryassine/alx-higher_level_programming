@@ -9,6 +9,7 @@ class Base():
     __nb_objects = 0
 
     def __init__(self, id=None):
+        """ init base """
         if id is not None:
             self.id = id
         else:
@@ -17,10 +18,12 @@ class Base():
 
     @classmethod
     def reset(cls):
+        """ reset number of objs to zero """
         cls.__nb_objects = 0
 
     @staticmethod
     def to_json_string(list_dictionaries):
+        """ returns JSON string representation of list_dictionaries """
         if list_dictionaries is None or list_dictionaries == []:
             return "[]"
         else:
@@ -28,6 +31,7 @@ class Base():
 
     @classmethod
     def save_to_file(cls, list_objs):
+        """ writes the JSON string representation of list_objs to a file """
         filename = cls.__name__ + ".json"
         with open(filename, "w+", encoding="utf-8") as f:
             if list_objs is None:
@@ -39,12 +43,14 @@ class Base():
 
     @staticmethod
     def from_json_string(json_string):
+        """ returns the list of the JSON string representation json_string """
         if json_string is None or json_string == "[]":
             return []
         return json.loads(json_string)
 
     @classmethod
     def create(cls, **dictionary):
+        """ returns an instance with all attributes already set """
         if dictionary and dictionary != {}:
             if cls.__name__ == "Square":
                 obj = cls(1)
@@ -56,6 +62,7 @@ class Base():
 
     @classmethod
     def load_from_file(cls):
+        """ returns a list of instances loaded from a file """
         filename = cls.__name__ + ".json"
 
         try:
