@@ -126,7 +126,7 @@ class Base():
 
         ttl.color("#ff0000")
         for sq in list_squares:
-            ttl.showtutrle()
+            ttl.showturtle()
             ttl.up()
             ttl.goto(sq.x, sq.y)
             ttl.down()
@@ -137,7 +137,7 @@ class Base():
                 
         ttl.color("#00ff00")
         for rect in list_rectangles:
-            ttl.showtutrle()
+            ttl.showturtle()
             ttl.up()
             ttl.goto(rect.x, rect.y)
             ttl.down()
