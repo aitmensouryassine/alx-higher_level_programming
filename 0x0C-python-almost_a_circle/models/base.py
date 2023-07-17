@@ -57,8 +57,8 @@ class Base():
             elif cls.__name__ == "Rectangle":
                 obj = cls(1, 1)
 
-        obj.update(**dictionary)
-        return obj
+            obj.update(**dictionary)
+            return obj
 
     @classmethod
     def load_from_file(cls):
