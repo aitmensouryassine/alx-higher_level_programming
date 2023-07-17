@@ -8,7 +8,7 @@ from models.square import Square
 
 
 class _AssertStdoutContext:
-
+    """ captures stdout """
     def __init__(self, testcase, expected):
         self.testcase = testcase
         self.expected = expected
@@ -28,6 +28,7 @@ class _AssertStdoutContext:
 
 
 class TestBaseClass(unittest.TestCase):
+    """ Test Base Class Instantiation """
 
     def test_id(self):
         b1 = Base()
@@ -86,6 +87,7 @@ class TestBaseClass(unittest.TestCase):
             Base(1, 1)
 
 class TestBase_to_json_string(unittest.TestCase):
+    """ Test to json string method """
 
     def test_tjs_no_args(self):
         with self.assertRaises(TypeError):
@@ -141,6 +143,7 @@ class TestBase_to_json_string(unittest.TestCase):
 
 
 class TestBase_save_to_file(unittest.TestCase):
+    """ Test save to file method """
 
     @classmethod
     def tearDown(self):
@@ -210,6 +213,7 @@ class TestBase_save_to_file(unittest.TestCase):
             self.assertTrue(len(f.read()), 79)
         
 class TestBase_from_json_string(unittest.TestCase):
+    """ Test from json string """
 
     def test_fjs_no_args(self):
         with self.assertRaises(TypeError):
@@ -257,6 +261,7 @@ class TestBase_from_json_string(unittest.TestCase):
 
 
 class TestBase_dict_to_inst(unittest.TestCase, _AssertStdoutContext):
+    """ Test dictionary to instance method """
 
     def setUp(self):
         Base.reset()
@@ -309,6 +314,7 @@ class TestBase_dict_to_inst(unittest.TestCase, _AssertStdoutContext):
         self.assertFalse(s1 == s2)
 
 class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
+    """ test load from file method """
 
     @classmethod
     def setUp(self):
@@ -397,6 +403,7 @@ class TestBase_load_from_file(unittest.TestCase, _AssertStdoutContext):
         
 
 class TestBase_save_to_file_csv(unittest.TestCase):
+    """ Test save to file csv method """
 
     @classmethod
     def tearDown(self):
@@ -473,6 +480,7 @@ class TestBase_save_to_file_csv(unittest.TestCase):
 
 
 class TestBase_load_from_file_csv(unittest.TestCase):
+    """ Test load from file csv """
 
     @classmethod
     def tearDown(self):
