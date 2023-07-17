@@ -71,9 +71,11 @@ class Rectangle(Base):
         self.__y = value
 
     def area(self):
+        """ calcuclates rectangle area """
         return self.width * self.height
 
     def display(self):
+        """ displays the rectangle using # symbol """
         for y in range(self.y):
             print()
         for h in range(self.height):
