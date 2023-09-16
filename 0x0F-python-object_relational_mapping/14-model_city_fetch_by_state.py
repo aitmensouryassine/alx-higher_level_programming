@@ -15,9 +15,9 @@ if __name__ == "__main__":
     engine = create_engine(mysql_engine.format(argv[1], argv[2], argv[3]))
     Session = sessionmaker(bind=engine)
     session = Session()
-    result = session.query(City, State)
-		.join(State, City.state_id == State.id)
-		.order_by(City.id).all()
+    result = session.query(City, State) \
+                    .join(State, City.state_id == State.id) \
+                    .order_by(City.id).all()
     for city, state in result:
         print("{}: ({}) {}".format(state.name, city.id, city.name))
     session.close()
