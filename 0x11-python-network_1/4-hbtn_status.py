@@ -2,7 +2,6 @@
 """Module that fetches https://alx-intranet.hbtn.io/status
 by using the package requests
 """
-from sys import argv
 import requests
 
 
