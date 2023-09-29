@@ -12,7 +12,7 @@ import urllib.error
 if __name__ == "__main__":
     req = urllib.request.Request(argv[1])
     try:
-       resp = urllib.request.urlopen(req)
-       print(resp.read().decode('utf-8'))
+        resp = urllib.request.urlopen(req)
+        print(resp.read().decode('utf-8'))
     except urllib.error.URLError as error:
         print("Error code: {}".format(error.code))
