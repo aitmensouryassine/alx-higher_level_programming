@@ -1,4 +1,5 @@
-const button = $("#red_header");
+const $ = window.$;
+const button = $('#red_header');
 button.click(function () {
-	$("header").addClass("red");
+  $('header').addClass('red');
 });
